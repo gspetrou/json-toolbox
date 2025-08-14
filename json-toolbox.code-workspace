@@ -1,0 +1,32 @@
+{
+  "folders": [
+    {
+      "path": ".",
+    },
+  ],
+  "settings": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+    },
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Run Extension",
+        "type": "extensionHost",
+        "request": "launch",
+        "args": [
+          "--extensionDevelopmentPath=${workspaceFolder}"
+        ],
+        "outFiles": [
+          "${workspaceFolder}/dist/**/*.js"
+        ],
+      }
+    ],
+  },
+  "extensions": {
+    /** Docs: http://go.microsoft.com/fwlink/?LinkId=827846 */
+    "recommendations": ["ms-vscode.extension-test-runner"],
+  },
+}
