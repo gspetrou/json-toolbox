@@ -30,9 +30,9 @@
   },
   "activationEvents": [],
   "type": "module",
-  "main": "./dist/extension.js",
+  "main": "./dist/extension.cjs",
   "exports": {
-    ".": "./dist/extensions.js"
+    ".": "./dist/extensions.cjs"
   },
   "scripts": {
     "build": "tsx esbuild.mts",

@@ -3,7 +3,7 @@ import * as esbuild from "esbuild";
 // Build src/ code
 const srcBuild = esbuild.build({
   entryPoints: ["src/extension.ts"],
-  outfile: "dist/extension.js",
+  outfile: "dist/extension.cjs",
   bundle: true,
   format: "cjs", // VSCode extensions do not support ESM.
   minify: true,
