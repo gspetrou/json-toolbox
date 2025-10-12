@@ -3,13 +3,13 @@ import { type TextEditor, Range, type TextEditorEdit, window } from "vscode";
 
 /**
  * Default to indenting with this many spaces if we can't determine the
- * preferred tab/space amount.
+ * preferred space amount.
  */
 const FALLBACK_INDENT_SPACE_AMOUNT = 2;
 
 /**
- * Attempts to determine the appropriate number of spaces, or if to use tab
- * characters, for pretty formatting.
+ * Attempts to determine the user's config to either use tabs, or to the
+ * number of spaces configured for indentation.
  */
 export const getPreferredIndentation = (): string | number => {
   const editorOptions = window.activeTextEditor?.options;
@@ -44,7 +44,7 @@ export const getSelectedRangeFromEditor = ({
 
 /**
  * Makes it easy to create a VSCode text editor command handler function which
- * simply needs to transforms the currently highlighted text in the active
+ * needs to transforms the currently highlighted text in the active
  * editor, to another piece of text.
  */
 export const applyTransformationToSelection = (args: {

@@ -5,8 +5,8 @@ common JSON-related utilities like minify, prettify, quote-escape,
 and unquote-escape.
 
 To be honest I'm only really making this extension since none of the
-already-existing extensions which provide this (that I know of) meet the
-criteria to be used at my work.
+already-existing extensions which provide this functionality (that I know of)
+meet the criteria to be used at my work (open-source and JS-only).
 
 
 ## Features - WIP
