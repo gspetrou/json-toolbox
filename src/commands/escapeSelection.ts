@@ -1,5 +1,5 @@
 import { type TextEditor, type TextEditorEdit, window } from "vscode";
-import { applyTransformationToSelection } from "../vscode-utils.js";
+import { applyTransformationToSelection } from "../lib/vscode.js";
 
 /**
  * VSCode command handler to escape the actively selected text so that it can

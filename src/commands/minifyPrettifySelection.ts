@@ -2,7 +2,7 @@ import { type TextEditor, type TextEditorEdit, window } from "vscode";
 import {
   applyTransformationToSelection,
   getPreferredIndentation,
-} from "../vscode-utils.js";
+} from "../lib/vscode.js";
 
 /**
  * Creates a VSCode text editor command handler function which formats the

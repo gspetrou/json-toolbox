@@ -1,4 +1,6 @@
-import { type TextEditor, type TextEditorEdit } from "vscode";
+import { window, type TextEditor, type TextEditorEdit } from "vscode";
+import { unescapeJson } from "../lib/json.js";
+import { applyTransformationToSelection } from "../lib/vscode.js";
 
 /**
  * VSCode command handler to un-escape the actively selected text. Generally
@@ -6,10 +8,18 @@ import { type TextEditor, type TextEditorEdit } from "vscode";
  * another JSON object.
  */
 const unescapeSelectionCommandHandler = (
-  _editor: TextEditor,
-  _edit: TextEditorEdit,
+  editor: TextEditor,
+  edit: TextEditorEdit,
 ): void => {
-  throw new Error("not implemented");
+  applyTransformationToSelection({
+    editor,
+    edit,
+    getTransformationToApply: ({ selectedText }) => ({
+      transformedText: unescapeJson(selectedText),
+    }),
+  });
+
+  window.showInformationMessage("Success!");
 };
 
 export default unescapeSelectionCommandHandler;

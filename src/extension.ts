@@ -16,23 +16,14 @@ export const activate = (context: ExtensionContext): void => {
       "json-toolbox.escapeSelection",
       escapeSelectionCommandHandler,
     ),
-  );
-
-  context.subscriptions.push(
     commands.registerTextEditorCommand(
       "json-toolbox.prettifySelection",
       prettifySelectionCommandHandler,
     ),
-  );
-
-  context.subscriptions.push(
     commands.registerTextEditorCommand(
       "json-toolbox.minifySelection",
       minifySelectionCommandHandler,
     ),
-  );
-
-  context.subscriptions.push(
     commands.registerTextEditorCommand(
       "json-toolbox.unescapeSelection",
       unescapeSelectionCommandHandler,
