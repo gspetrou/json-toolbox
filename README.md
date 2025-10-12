@@ -8,36 +8,48 @@ To be honest I'm only really making this extension since none of the
 already-existing extensions which provide this functionality (that I know of)
 meet the criteria to be used at my work (open-source and JS-only).
 
+This extension has no dependencies, is written only in Typescript/Javascript,
+and is less than 3KB.
 
-## Features - WIP
+## Commands
 
-### Prettify
-Format JSON into something easy to read.
+Find these in the command palette (`cmd+shift+p` or `ctrl+shift+p`)
 
-### Minify
-Take all the JSON and make it into one minified line.
+### `JSON Toolbox: Prettify selection`
+Format the highlighted JSON into something easy to read. The indentation used is
+based on the current settings (tabs, 4-space, 2-spaces, etc.).
 
-### Quote escape
-Escape all quotes in a JSON blob. Very useful when passing JSON into something
-like a `curl` argument.
+### `JSON Toolbox: Minify selection`
+Take the highlighted JSON and make it into one minified line.
 
-### Quote unescape
-Unescape all quotes from a JSON blob.
+### `JSON Toolbox: Escape selection`
+Escapes any characters in the highlighted text that are not allowed in a JSON
+string.
+
+### `JSON Toolbox: Unescape selection`
+Unescape any escape character sequences in the highlighted body of text.
+
+Unescaping is the only hand-written part of this extension, everything else
+simply relies on `JSON.prettify` or `JSON.stringify`. Unescaping attempts to
+follow the [ECMA 404 standard](https://ecma-international.org/wp-content/uploads/ECMA-404_2nd_edition_december_2017.pdf)
+(section 9, "Strings", page 4).
+
+**Important:** Control characters will not be unescaped.
 
 
 ## Requirements
 
-None!
+None
 
 
 ## Extension settings
 
-None!
+None
 
 
 ## Known issues
 
-None! (yet)
+None (yet)
 
 
 ## Release notes

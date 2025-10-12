@@ -1,6 +1,6 @@
 {
   "name": "json-toolbox",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "displayName": "JSON Toolbox",
   "description": "JSON tools to minify, prettify, quote escape, quote unescape, and possibly more!",
   "license": "UNLICENSED",
