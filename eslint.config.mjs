@@ -2,10 +2,11 @@ import eslint from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import globals from "globals";
+import { defineConfig } from "eslint/config";
 import importPlugin from "eslint-plugin-import";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config(
+export default defineConfig(
   { ignores: [".vscode-test", "dist", "node_modules"] },
   eslint.configs.recommended,
   {
@@ -67,10 +68,10 @@ export default tseslint.config(
   },
   eslintPluginPrettierRecommended,
   eslintConfigPrettier,
-  {
-    files: ["**/*.test.ts"],
-    rules: {
-      "@typescript-eslint/no-floating-promises": "off",
-    },
-  },
+  // {
+  //   files: ["**/*.test.ts"],
+  //   rules: {
+  //     "@typescript-eslint/no-floating-promises": "off",
+  //   },
+  // },
 );

@@ -18,7 +18,7 @@ const testBuild = esbuild.build({
   entryPoints: ["test/**"],
   outdir: "node_modules/.tmp/test/",
   bundle: false,
-  format: "cjs", // Either Mocha, VSCode test CLI, or both, doesn't support ESM.
+  format: "cjs", // Mocha and VSCode test CLI do not support ESM.
   minify: false,
   sourcemap: true,
   sourcesContent: true,

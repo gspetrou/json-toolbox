@@ -23,8 +23,20 @@
   "contributes": {
     "commands": [
       {
-        "command": "json-toolbox.helloWorld",
-        "title": "Hello World"
+        "command": "json-toolbox.escapeSelection",
+        "title": "JSON Toolbox: Escape highlighted JSON"
+      },
+      {
+        "command": "json-toolbox.minifySelection",
+        "title": "JSON Toolbox: Minify highlighted JSON"
+      },
+      {
+        "command": "json-toolbox.prettifySelection",
+        "title": "JSON Toolbox: Prettify highlighted JSON"
+      },
+      {
+        "command": "json-toolbox.unescapeSelection",
+        "title": "JSON Toolbox: Unescape highlighted JSON"
       }
     ]
   },
@@ -45,25 +57,25 @@
     "vscode:prepublish": "pnpm release"
   },
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
+    "@eslint/js": "^9.37.0",
     "@types/mocha": "^10.0.10",
-    "@types/node": "~22.17.1",
-    "@types/vscode": "^1.102.0",
-    "@typescript-eslint/eslint-plugin": "^8.39.1",
-    "@typescript-eslint/parser": "^8.39.1",
+    "@types/node": "~22.17.2",
+    "@types/vscode": "^1.105.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.0",
     "@vscode/test-cli": "^0.0.11",
     "@vscode/test-electron": "^2.5.2",
-    "esbuild": "^0.25.9",
-    "eslint": "^9.33.0",
+    "esbuild": "^0.25.10",
+    "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
-    "globals": "^16.3.0",
-    "mocha": "^11.7.1",
+    "globals": "^16.4.0",
+    "mocha": "^11.7.4",
     "prettier": "^3.6.2",
-    "tsx": "^4.20.4",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.39.1"
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0"
   }
 }

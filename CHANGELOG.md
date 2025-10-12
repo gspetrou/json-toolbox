@@ -1,4 +1,4 @@
-# Change Log
+# Changelog
 
 All notable changes to the "json-toolbox" extension will be documented in this file.
 

@@ -1,6 +1,8 @@
 {
   "version": "0.2.0",
   "configurations": [
+    // Unsure why but this only seems to work when defined in `launch.json` and
+    // not in the workspace config file.
     {
       "name": "Run Extension",
       "type": "extensionHost",

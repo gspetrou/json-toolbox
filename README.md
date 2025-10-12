@@ -17,11 +17,11 @@ Format JSON into something easy to read.
 ### Minify
 Take all the JSON and make it into one minified line.
 
-### Quote Escape
+### Quote escape
 Escape all quotes in a JSON blob. Very useful when passing JSON into something
 like a `curl` argument.
 
-### Quote Unescape
+### Quote unescape
 Unescape all quotes from a JSON blob.
 
 
@@ -30,21 +30,21 @@ Unescape all quotes from a JSON blob.
 None!
 
 
-## Extension Settings
+## Extension settings
 
 None!
 
 
-## Known Issues
+## Known issues
 
 None! (yet)
 
 
-## Release Notes
+## Release notes
 
 See [CHANGELOG.md](https://github.com/gspetrou/json-toolbox/blob/main/CHANGELOG.md)
 
 
-## Development Notes
+## Development notes
 
 See [DEVELOPMENT.md](https://github.com/gspetrou/json-toolbox/blob/main/DEVELOPMENT.md)
