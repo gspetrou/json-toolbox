@@ -1,12 +1,15 @@
 import { type TextEditor, type TextEditorEdit, window } from "vscode";
-import { applyTransformationToSelection } from "../vscode-utils.js";
+import {
+  applyTransformationToSelection,
+  getPreferredIndentation,
+} from "../vscode-utils.js";
 
 /**
  * Creates a VSCode text editor command handler function which formats the
  * actively selected text to the amount of `indentSpaces`.
  */
 const createFormattedJsonCommandHandler =
-  ({ indentSpaces }: { readonly indentSpaces: 0 | 2 }) =>
+  ({ getIndentation }: { readonly getIndentation: () => number | string }) =>
   (editor: TextEditor, edit: TextEditorEdit): void => {
     applyTransformationToSelection({
       editor,
@@ -15,7 +18,7 @@ const createFormattedJsonCommandHandler =
         transformedText: JSON.stringify(
           JSON.parse(selectedText),
           null,
-          indentSpaces,
+          getIndentation(),
         ),
       }),
     });
@@ -24,9 +27,10 @@ const createFormattedJsonCommandHandler =
   };
 
 export const minifySelectionCommandHandler = createFormattedJsonCommandHandler({
-  indentSpaces: 0,
+  getIndentation: () => 0,
 });
+
 export const prettifySelectionCommandHandler =
   createFormattedJsonCommandHandler({
-    indentSpaces: 2, // TODO: Make this the editor's indent size
+    getIndentation: getPreferredIndentation,
   });

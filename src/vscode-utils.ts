@@ -1,6 +1,27 @@
 import { type TextEditor, Range, type TextEditorEdit, window } from "vscode";
 
 /**
+ * Default to indenting with this many spaces if we can't determine the
+ * preferred tab/space amount.
+ */
+const FALLBACK_INDENT_SPACE_AMOUNT = 2;
+
+/**
+ * Attempts to determine the appropriate number of spaces, or if to use tab
+ * characters, for pretty formatting.
+ */
+export const getPreferredIndentation = (): string | number => {
+  const editorOptions = window.activeTextEditor?.options;
+  if (!editorOptions) {
+    return FALLBACK_INDENT_SPACE_AMOUNT;
+  }
+  if (!editorOptions.insertSpaces) {
+    return "\t";
+  }
+  return editorOptions.tabSize ?? FALLBACK_INDENT_SPACE_AMOUNT;
+};
+
+/**
  * Gets the currently selected {@link Range} of text from the given editor.
  */
 export const getSelectedRangeFromEditor = ({
