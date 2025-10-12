@@ -1,4 +1,4 @@
-import { window, type TextEditor, type TextEditorEdit } from "vscode";
+import { type TextEditor, type TextEditorEdit } from "vscode";
 import { unescapeJson } from "../lib/json.js";
 import { applyTransformationToSelection } from "../lib/vscode.js";
 
@@ -18,8 +18,6 @@ const unescapeSelectionCommandHandler = (
       transformedText: unescapeJson(selectedText),
     }),
   });
-
-  window.showInformationMessage("Success!");
 };
 
 export default unescapeSelectionCommandHandler;

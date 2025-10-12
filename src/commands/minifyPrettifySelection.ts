@@ -1,4 +1,4 @@
-import { type TextEditor, type TextEditorEdit, window } from "vscode";
+import { type TextEditor, type TextEditorEdit } from "vscode";
 import {
   applyTransformationToSelection,
   getPreferredIndentation,
@@ -22,8 +22,6 @@ const createFormattedJsonCommandHandler =
         ),
       }),
     });
-
-    window.showInformationMessage("Success!");
   };
 
 export const minifySelectionCommandHandler = createFormattedJsonCommandHandler({

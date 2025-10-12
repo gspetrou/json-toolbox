@@ -1,3 +1,4 @@
+import { inspect } from "node:util";
 import { type TextEditor, Range, type TextEditorEdit, window } from "vscode";
 
 /**
@@ -67,8 +68,15 @@ export const applyTransformationToSelection = (args: {
   try {
     const transform = getTransformationToApply({ selectedText });
     transformedText = transform.transformedText;
-  } catch (_error) {
-    window.showErrorMessage("Failure!");
+  } catch (e: unknown) {
+    // Visible by going to Help -> Toggle Developer Tools -> Console
+    console.error(`JSON Toolbox command failure: ${inspect(e)}`);
+
+    const errMsg =
+      e instanceof Error ?
+        `${e.name} - ${e.message}`
+      : "Unknown, see DevTools.";
+    window.showErrorMessage(`FAILURE: ${errMsg}`);
     return;
   }
 

@@ -1,4 +1,4 @@
-import { type TextEditor, type TextEditorEdit, window } from "vscode";
+import { type TextEditor, type TextEditorEdit } from "vscode";
 import { applyTransformationToSelection } from "../lib/vscode.js";
 
 /**
@@ -16,8 +16,6 @@ const escapeSelectionCommandHandler = (
       transformedText: JSON.stringify(selectedText),
     }),
   });
-
-  window.showInformationMessage("Success!");
 };
 
 export default escapeSelectionCommandHandler;
