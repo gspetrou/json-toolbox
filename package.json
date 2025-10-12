@@ -24,19 +24,19 @@
     "commands": [
       {
         "command": "json-toolbox.escapeSelection",
-        "title": "JSON Toolbox: Escape highlighted JSON"
+        "title": "JSON Toolbox: Escape selection"
       },
       {
         "command": "json-toolbox.minifySelection",
-        "title": "JSON Toolbox: Minify highlighted JSON"
+        "title": "JSON Toolbox: Minify selection"
       },
       {
         "command": "json-toolbox.prettifySelection",
-        "title": "JSON Toolbox: Prettify highlighted JSON"
+        "title": "JSON Toolbox: Prettify selection"
       },
       {
         "command": "json-toolbox.unescapeSelection",
-        "title": "JSON Toolbox: Unescape highlighted JSON"
+        "title": "JSON Toolbox: Unescape selection"
       }
     ]
   },
