@@ -52,7 +52,9 @@
     "fix": "eslint . --fix",
     "lint": "eslint .",
     "release": "pnpm typecheck && pnpm lint && pnpm build && pnpm test",
-    "test": "vscode-test",
+    "test:integ": "vscode-test",
+    "test:unit": "vitest run",
+    "test": "pnpm test:unit && pnpm test:integ",
     "typecheck": "tsc",
     "vscode:prepublish": "pnpm release"
   },
@@ -76,6 +78,7 @@
     "prettier": "^3.6.2",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.0"
+    "typescript-eslint": "^8.46.0",
+    "vitest": "^3.2.4"
   }
 }

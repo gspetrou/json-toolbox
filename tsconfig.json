@@ -1,36 +1,8 @@
 {
-  "compilerOptions": {
-    /**
-     * Output
-     *
-     * We only use `tsc` to Typecheck so emit nothing.
-     * We use ESBuild for compiling.
-     */
-    "noEmit": true,
-    "declaration": false,
-    "declarationMap": false,
-    "sourceMap": false,
-
-    /** Module and emitted code behavior. */
-    "module": "nodenext",
-    "target": "ES2023",
-    "lib": ["ES2023"],
-    "useDefineForClassFields": true,
-    "isolatedModules": true,
-    "types": ["node", "vscode"],
-
-    /** Typechecking */
-    "strict": true,
-    "strictNullChecks": true,
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "exactOptionalPropertyTypes": false, // Annoying
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noUncheckedSideEffectImports": true
-  }
+  "files": [],
+  "references": [
+    { "path": "./src" },
+    { "path": "./test/integ" },
+    { "path": "./test/unit" },
+  ]
 }

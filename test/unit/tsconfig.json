@@ -1,0 +1,11 @@
+{
+  "extends": ["../../tsconfig.base.json"],
+  "include": [
+    "./**/*.ts",
+    "../../esbuild.mts", // just to stop nagging
+    "../../vitest.config.mts"
+  ],
+  "compilerOptions": {
+    "types": ["node", "vitest"],
+  }
+}

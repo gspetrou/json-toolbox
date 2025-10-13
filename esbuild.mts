@@ -13,10 +13,10 @@ const srcBuild = esbuild.build({
   external: ["vscode"],
 });
 
-// Build test/ code
-const testBuild = esbuild.build({
-  entryPoints: ["test/**"],
-  outdir: "node_modules/.tmp/test/",
+// Build test/integ/ code
+const integTestBuild = esbuild.build({
+  entryPoints: ["test/integ/**/*.ts"],
+  outdir: "node_modules/.tmp/test/integ",
   bundle: false,
   format: "cjs", // Mocha and VSCode test CLI do not support ESM.
   minify: false,
@@ -25,4 +25,4 @@ const testBuild = esbuild.build({
   platform: "node",
 });
 
-await Promise.all([srcBuild, testBuild]);
+await Promise.all([srcBuild, integTestBuild]);
