@@ -10,18 +10,25 @@ const numberToUnicode16String = (num: number): string => {
   return `\\u` + "0".repeat(neededPadding) + numHexStr;
 };
 
-const CONTROL_CHAR_UNESCAPE_MAPPING = Array.from(
-  { length: 0x001f + 1 },
-  (_, i) => i,
-).reduce<Record<string, string>>(
-  (prevObj, controlCharUnicodeNumber) => ({
-    ...prevObj,
-    [numberToUnicode16String(controlCharUnicodeNumber)]: String.fromCharCode(
-      controlCharUnicodeNumber,
-    ),
-  }),
-  {},
-);
+/**
+ * Mapping from all unicode strings from 0x0000 to 0x001f, to the actual char
+ * being represented.
+ *
+ * For example, a key may be `\u0x001B` and the value would be `char(0x001B)`,
+ * which is the "escape" control character.
+ */
+const CONTROL_CHAR_UNESCAPE_MAPPING: Readonly<Record<string, string>> =
+  Array.from({ length: 0x001f + 1 }, (_, i) => i).reduce<
+    Readonly<Record<string, string>>
+  >(
+    (prevObj, controlCharUnicodeNumber) => ({
+      ...prevObj,
+      [numberToUnicode16String(controlCharUnicodeNumber)]: String.fromCharCode(
+        controlCharUnicodeNumber,
+      ),
+    }),
+    {},
+  );
 
 const ESCAPED_TO_UNESCAPED_MAP = Object.freeze<Record<string, string>>({
   ...CONTROL_CHAR_UNESCAPE_MAPPING,
@@ -44,6 +51,7 @@ const ESCAPED_TO_UNESCAPED_MAP = Object.freeze<Record<string, string>>({
  */
 export const unescapeJson = (escapedJsonStr: string): string => {
   let unescaped = escapedJsonStr;
+  // If Regex guru (or not regex) has a faster way of applying these changes lmk.
   for (const [fromStr, toStr] of Object.entries(ESCAPED_TO_UNESCAPED_MAP)) {
     unescaped = unescaped.replaceAll(fromStr, toStr);
   }

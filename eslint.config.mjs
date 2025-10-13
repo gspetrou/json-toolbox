@@ -5,6 +5,7 @@ import globals from "globals";
 import { defineConfig } from "eslint/config";
 import importPlugin from "eslint-plugin-import";
 import tseslint from "typescript-eslint";
+import vitest from "@vitest/eslint-plugin";
 
 export default defineConfig(
   { ignores: [".vscode-test", "dist", "node_modules"] },
@@ -66,12 +67,14 @@ export default defineConfig(
       ],
     },
   },
+  {
+    files: ["./test/unit/**/*.ts"],
+    ...vitest.configs.recommended,
+    rules: {
+      ...vitest.configs.recommended.rules,
+      ["vitest/no-conditional-expect"]: "error",
+    },
+  },
   eslintPluginPrettierRecommended,
   eslintConfigPrettier,
-  // {
-  //   files: ["**/*.test.ts"],
-  //   rules: {
-  //     "@typescript-eslint/no-floating-promises": "off",
-  //   },
-  // },
 );

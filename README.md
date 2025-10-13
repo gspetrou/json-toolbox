@@ -34,8 +34,6 @@ simply relies on `JSON.prettify` or `JSON.stringify`. Unescaping attempts to
 follow the [ECMA 404 standard](https://ecma-international.org/wp-content/uploads/ECMA-404_2nd_edition_december_2017.pdf)
 (section 9, "Strings", page 4).
 
-**Important:** Control characters will not be unescaped.
-
 
 ## Requirements
 
