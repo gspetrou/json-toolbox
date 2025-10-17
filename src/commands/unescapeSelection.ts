@@ -7,7 +7,7 @@ import { applyTransformationToSelection } from "../lib/vscode.js";
  * useful when reading a string field from JSON that you also want to parse into
  * another JSON object.
  */
-const unescapeSelectionCommandHandler = (
+export const unescapeSelectionCommandHandler = (
   editor: TextEditor,
   edit: TextEditorEdit,
 ): void => {
@@ -19,5 +19,3 @@ const unescapeSelectionCommandHandler = (
     }),
   });
 };
-
-export default unescapeSelectionCommandHandler;
