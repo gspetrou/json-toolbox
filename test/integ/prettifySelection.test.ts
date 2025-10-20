@@ -1,17 +1,18 @@
-import { describe, it } from "mocha";
-import { expectVscodeTextCommandTransformation } from "./utils.js";
+import { vscodeTextTransformationTestSuite } from "./utils.js";
 
-describe("prettifySelection", () => {
-  it("prettifies the input as expected", async function () {
-    this.timeout(5000);
-
-    const inputObject = { hello: "world" };
-    await expectVscodeTextCommandTransformation({
-      initialText: JSON.stringify(inputObject, null, 0),
-      expectedOutput: JSON.stringify(inputObject, null, 2),
-      commandToExecute: "json-toolbox.prettifySelection",
-      useSpaces: true,
-      indentSize: 2,
-    });
-  });
+vscodeTextTransformationTestSuite({
+  testSuiteName: "prettifySelection",
+  testNamePrefix: "prettifies the expected text",
+  commandToExecute: "json-toolbox.prettifySelection",
+  testData: [
+    (() => {
+      const inputObject = { hello: "world" };
+      return {
+        input: JSON.stringify(inputObject, null, 0),
+        expectedOutput: JSON.stringify(inputObject, null, 2),
+        useSpaces: true,
+        indentSize: 2,
+      };
+    })(),
+  ],
 });

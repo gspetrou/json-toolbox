@@ -1,16 +1,21 @@
-import { describe, it } from "mocha";
-import { expectVscodeTextCommandTransformation } from "./utils.js";
+import { vscodeTextTransformationTestSuite } from "./utils.js";
 
-describe("escapeSelection", () => {
-  it("escapes the input as expected", async function () {
-    this.timeout(5000);
-
-    await expectVscodeTextCommandTransformation({
-      initialText: '{"hello":\t"world"}',
+vscodeTextTransformationTestSuite({
+  testSuiteName: "escapeSelection",
+  testNamePrefix: "escapes the expected text",
+  commandToExecute: "json-toolbox.escapeSelection",
+  testData: [
+    {
+      input: '{"hello":\t"world"}',
       expectedOutput: '{\\"hello\\":\\t\\"world\\"}',
-      commandToExecute: "json-toolbox.escapeSelection",
       useSpaces: true,
       indentSize: 2,
-    });
-  });
+    },
+    {
+      input: '{"hello":\n"world"}',
+      expectedOutput: '{\\"hello\\":\\n\\"world\\"}',
+      useSpaces: true,
+      indentSize: 2,
+    },
+  ],
 });

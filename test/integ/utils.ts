@@ -1,4 +1,5 @@
 import assert from "node:assert";
+import { type Suite, before, describe, test } from "mocha";
 import {
   type TextEditor,
   Range,
@@ -9,28 +10,13 @@ import {
 } from "vscode";
 
 /** Sleeps for the given milliseconds. */
-export const sleepMs = (sleepTimeMillisec: number) =>
+const sleepMs = (sleepTimeMillisec: number) =>
   new Promise((resolve) => setTimeout(resolve, sleepTimeMillisec));
-
-/**
- * Creates a new text document in VSCode, makes it the active editor, and sets
- * the contents of it.
- */
-export const createActiveTextEditorWithContent = async ({
-  content,
-}: {
-  readonly content: string;
-}): Promise<TextEditor> => {
-  const textDocument = await workspace.openTextDocument({
-    content: content,
-  });
-  return window.showTextDocument(textDocument);
-};
 
 /**
  * Selects all text in the given editor's document.
  */
-export const selectAllTextInEditor = ({
+const selectAllTextInEditor = ({
   editor,
 }: {
   readonly editor: TextEditor;
@@ -46,7 +32,7 @@ export const selectAllTextInEditor = ({
  * Configures whether to use tabs or spaces, and the size of an indent, in the
  * given editor.
  */
-export const setEditorIndentationOptions = ({
+const setEditorIndentationOptions = ({
   editor,
   useSpaces,
   indentSize,
@@ -61,35 +47,103 @@ export const setEditorIndentationOptions = ({
 };
 
 /**
- * High-level function which
- *   1. Defines an active text editor in VSCode prepopulated with `initialText`.
- *   2. Configures the editor to the given spacing/tabbing options.
- *   3. Runs the given `commandToExecute`.
- *   4. Checks the contents of the editor now matches `expectedOutput`.
+ * Replaces all the text in the given editor with the given content.
  */
-export const expectVscodeTextCommandTransformation = async (args: {
-  readonly initialText: string;
-  readonly expectedOutput: string;
-  readonly commandToExecute: string;
-  readonly useSpaces: boolean;
-  readonly indentSize: number | "auto";
-}): Promise<void> => {
-  const editor = await createActiveTextEditorWithContent({
-    content: args.initialText,
+const replaceAllTextInEditorWith = ({
+  editor,
+  content,
+}: {
+  readonly editor: TextEditor;
+  readonly content: string;
+}) =>
+  editor.edit((edit) => {
+    edit.replace(
+      editor.document.validateRange(
+        new Range(0, 0, editor.document.lineCount, 0),
+      ),
+      content,
+    );
   });
-  setEditorIndentationOptions({
-    editor,
-    useSpaces: args.useSpaces,
-    indentSize: args.indentSize,
-  });
-  selectAllTextInEditor({ editor });
 
-  await sleepMs(100);
-
-  commands.executeCommand(args.commandToExecute);
-
-  await sleepMs(100);
-
-  const updatedText = editor.document.getText();
-  assert.strictEqual(updatedText, args.expectedOutput);
+/**
+ * Runs the callback until it returns a value instead of throwing. If the
+ * callback throws `totalAttempts` times then the error bubbles up.
+ */
+const waitFor = async <T>(
+  cb: () => T,
+  opts?: {
+    readonly delayMs: number;
+    readonly totalAttempts: number;
+  },
+): Promise<T> => {
+  const { delayMs = 10, totalAttempts = 3 } = opts ?? {};
+  for (
+    let attemptsRemaining = totalAttempts;
+    attemptsRemaining > 0;
+    attemptsRemaining--
+  ) {
+    try {
+      return cb();
+    } catch (error) {
+      if (attemptsRemaining === 1) {
+        throw error;
+      }
+      await sleepMs(delayMs);
+    }
+  }
+  throw new Error("Reached unreachable code in waitFor!");
 };
+
+/**
+ * Defines a test suite with a set of parametrized tests. These tests test a
+ * VSCode text editor command that applies a text transformation.
+ */
+export const vscodeTextTransformationTestSuite = (args: {
+  readonly testSuiteName: string;
+  readonly testNamePrefix: string;
+  readonly commandToExecute: string;
+  readonly testData: ReadonlyArray<{
+    readonly input: string;
+    readonly expectedOutput: string;
+    readonly useSpaces: boolean;
+    readonly indentSize: number | "auto";
+  }>;
+}): Suite =>
+  describe(args.testSuiteName, () => {
+    let editor: TextEditor;
+
+    before("create a VSCode editor and set it as active", async () => {
+      const textDocument = await workspace.openTextDocument();
+      editor = await window.showTextDocument(textDocument);
+    });
+
+    args.testData.forEach((testArgs) => {
+      const testTitle =
+        args.testNamePrefix
+        + " when the input is: "
+        + testArgs.input.slice(0, 100)
+        + (testArgs.input.length > 100 ? "..." : "");
+
+      test(testTitle, async () => {
+        setEditorIndentationOptions({
+          editor,
+          useSpaces: testArgs.useSpaces,
+          indentSize: testArgs.indentSize,
+        });
+        replaceAllTextInEditorWith({ editor, content: testArgs.input });
+
+        await waitFor(() => {
+          const initialText = editor.document.getText();
+          assert.strictEqual(initialText, testArgs.input);
+        });
+
+        selectAllTextInEditor({ editor });
+        commands.executeCommand(args.commandToExecute);
+
+        await waitFor(() => {
+          const updatedText = editor.document.getText();
+          assert.strictEqual(updatedText, testArgs.expectedOutput);
+        });
+      });
+    });
+  });
