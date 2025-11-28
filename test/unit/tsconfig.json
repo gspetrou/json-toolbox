@@ -2,6 +2,7 @@
   "extends": ["../../tsconfig.base.json"],
   "include": [
     "./**/*.ts",
+    "../control-chars.ts",
     "../../esbuild.mts", // just to stop nagging
     "../../vitest.config.mts"
   ],

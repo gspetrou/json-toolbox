@@ -15,8 +15,8 @@ const srcBuild = esbuild.build({
 
 // Build test/integ/ code
 const integTestBuild = esbuild.build({
-  entryPoints: ["test/integ/**/*.ts"],
-  outdir: "node_modules/.tmp/test/integ",
+  entryPoints: ["test/common/**/*.ts", "test/integ/**/*.ts"],
+  outdir: "node_modules/.tmp/test",
   bundle: false,
   format: "cjs", // Mocha and VSCode test CLI do not support ESM.
   minify: false,

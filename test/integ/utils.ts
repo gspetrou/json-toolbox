@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { type Suite, before, describe, test } from "mocha";
+import { type Suite, after, before, beforeEach, describe, test } from "mocha";
 import {
   type TextEditor,
   Range,
@@ -72,11 +72,14 @@ const replaceAllTextInEditorWith = ({
 const waitFor = async <T>(
   cb: () => T,
   opts?: {
-    readonly delayMs: number;
-    readonly totalAttempts: number;
+    readonly delayMs?: number;
+    readonly totalAttempts?: number;
   },
 ): Promise<T> => {
-  const { delayMs = 10, totalAttempts = 3 } = opts ?? {};
+  // Default delay and totalAttempts is pretty generous since VSCode performance
+  // doesn't seem very reliable when dealing with double-digit or less
+  // millisecond differences in timing.
+  const { delayMs = 10, totalAttempts = 10 } = opts ?? {};
   for (
     let attemptsRemaining = totalAttempts;
     attemptsRemaining > 0;
@@ -100,9 +103,9 @@ const waitFor = async <T>(
  */
 export const vscodeTextTransformationTestSuite = (args: {
   readonly testSuiteName: string;
-  readonly testNamePrefix: string;
   readonly commandToExecute: string;
   readonly testData: ReadonlyArray<{
+    readonly testName: string;
     readonly input: string;
     readonly expectedOutput: string;
     readonly useSpaces: boolean;
@@ -117,14 +120,26 @@ export const vscodeTextTransformationTestSuite = (args: {
       editor = await window.showTextDocument(textDocument);
     });
 
-    args.testData.forEach((testArgs) => {
-      const testTitle =
-        args.testNamePrefix
-        + " when the input is: "
-        + testArgs.input.slice(0, 100)
-        + (testArgs.input.length > 100 ? "..." : "");
+    beforeEach("wait for VSCode to catch up", async () => {
+      // Needed to help improve reliability of tests. Im unsure what needs
+      // waiting-on here so I time-boxed myself and just added
+      // a static 100ms wait.
+      await sleepMs(100);
+    });
 
-      test(testTitle, async () => {
+    after("closes the active tab", async () => {
+      await window.tabGroups.close(window.tabGroups.activeTabGroup);
+    });
+
+    args.testData.forEach((testArgs) => {
+      test(testArgs.testName, async () => {
+        replaceAllTextInEditorWith({ editor, content: "" });
+
+        await waitFor(() => {
+          const initialText = editor.document.getText();
+          assert.strictEqual(initialText, "");
+        });
+
         setEditorIndentationOptions({
           editor,
           useSpaces: testArgs.useSpaces,

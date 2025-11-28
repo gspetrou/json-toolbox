@@ -2,10 +2,10 @@ import { vscodeTextTransformationTestSuite } from "./utils.js";
 
 vscodeTextTransformationTestSuite({
   testSuiteName: "minifySelection",
-  testNamePrefix: "minifies the expected text",
   commandToExecute: "json-toolbox.minifySelection",
   testData: [
     {
+      testName: "minifies the given JSON",
       input: JSON.stringify({ hello: "world" }, null, 2),
       expectedOutput: '{"hello":"world"}',
       useSpaces: true,
